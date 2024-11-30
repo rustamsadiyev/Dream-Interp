@@ -12,8 +12,8 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as WhyDreamImport } from './routes/whyDream'
-import { Route as FormImport } from './routes/form'
 import { Route as IndexImport } from './routes/index'
+import { Route as DetailsIdImport } from './routes/details.$id'
 
 // Create/Update Routes
 
@@ -23,15 +23,15 @@ const WhyDreamRoute = WhyDreamImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const FormRoute = FormImport.update({
-  id: '/form',
-  path: '/form',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DetailsIdRoute = DetailsIdImport.update({
+  id: '/details/$id',
+  path: '/details/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,18 +46,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/form': {
-      id: '/form'
-      path: '/form'
-      fullPath: '/form'
-      preLoaderRoute: typeof FormImport
-      parentRoute: typeof rootRoute
-    }
     '/whyDream': {
       id: '/whyDream'
       path: '/whyDream'
       fullPath: '/whyDream'
       preLoaderRoute: typeof WhyDreamImport
+      parentRoute: typeof rootRoute
+    }
+    '/details/$id': {
+      id: '/details/$id'
+      path: '/details/$id'
+      fullPath: '/details/$id'
+      preLoaderRoute: typeof DetailsIdImport
       parentRoute: typeof rootRoute
     }
   }
@@ -67,42 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
   '/whyDream': typeof WhyDreamRoute
+  '/details/$id': typeof DetailsIdRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
   '/whyDream': typeof WhyDreamRoute
+  '/details/$id': typeof DetailsIdRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/form': typeof FormRoute
   '/whyDream': typeof WhyDreamRoute
+  '/details/$id': typeof DetailsIdRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/form' | '/whyDream'
+  fullPaths: '/' | '/whyDream' | '/details/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/form' | '/whyDream'
-  id: '__root__' | '/' | '/form' | '/whyDream'
+  to: '/' | '/whyDream' | '/details/$id'
+  id: '__root__' | '/' | '/whyDream' | '/details/$id'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FormRoute: typeof FormRoute
   WhyDreamRoute: typeof WhyDreamRoute
+  DetailsIdRoute: typeof DetailsIdRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FormRoute: FormRoute,
   WhyDreamRoute: WhyDreamRoute,
+  DetailsIdRoute: DetailsIdRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,18 +116,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/form",
-        "/whyDream"
+        "/whyDream",
+        "/details/$id"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/form": {
-      "filePath": "form.tsx"
-    },
     "/whyDream": {
       "filePath": "whyDream.tsx"
+    },
+    "/details/$id": {
+      "filePath": "details.$id.tsx"
     }
   }
 }
