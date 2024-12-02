@@ -14,12 +14,12 @@ export default function DreamDetails() {
     queryKey: ['dream', dreamName],
   }) as { data: DreamResponse | undefined; error: Error | null; isLoading: boolean };
 
-  const { data: titlesData, error: titlesError } = useGet({
+  const { data: titlesData} = useGet({
     endpoint: "http://192.168.0.49:8014/get_titles",
     queryKey: ["dreams"]
   });
   
-  if (titlesError) return <p>{titlesError.message}</p>
+  // if (titlesError) return <p>{titlesError.message}</p>
   
 
   if (isLoading) {

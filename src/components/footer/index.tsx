@@ -3,7 +3,7 @@ export default function Footer() {
     return (
         
     <>
-    <div className="bg-gray-800 text-white p-8 mt-12">
+    <div className="bg-gray-800 text-white p-8 pt-12">
   <div className="container mx-auto text-center">
     <h2 className="text-3xl font-bold mb-6 text-gray-200">Explore Common Dreams</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

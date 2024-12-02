@@ -14,12 +14,12 @@ export default function MainPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const { data, error} = useGet({
+  const { data} = useGet({
     endpoint: "http://192.168.0.49:8014/get_titles",
     queryKey: ["dreams"],
   });
 
-  if (error) return <p>{error.message}</p>;
+  // if (error) return <p>{error.message}</p>;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 py-8 md:py-12">

@@ -46,22 +46,21 @@ export default function SearchHeader() {
     });
   };
 
-  if (error) return <p>Error: {error.message}</p>;
   
 
   return (
     <div className="relative w-full">
       <div
-        className="bg-cover bg-center bg-no-repeat w-full flex items-center justify-center min-h-[200px] h-[40vh] md:h-[35vh] lg:h-[50vh]"
+        className="bg-cover bg-center bg-no-repeat w-full flex items-center justify-center min-h-[150px] h-[30vh] md:h-[25vh] lg:h-[35vh]"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
         <div className="w-full max-w-3xl px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
           <div className="text-center mb-4 md:mb-6">
-            <h1 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold drop-shadow-lg">
+            <h1 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold drop-shadow-lg">
               Search for the dream
             </h1>
           </div>
-          <div className="bg-whitebg-opacity-70 backdrop-blur-sm p-3 sm:p-4 rounded-lg shadow-lg mx-auto w-full max-w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%]">
+          <div className="bg-whitebg-opacity-70 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg mx-auto w-full max-w-[85%] sm:max-w-[75%] md:max-w-[65%] lg:max-w-[55%]">
             <div className="relative flex items-center space-x-2 ">
               <input
                 type="text"
