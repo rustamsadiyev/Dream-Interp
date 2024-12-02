@@ -14,7 +14,7 @@ export default function MainPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const { data} = useGet({
+  const {data} = useGet({
     endpoint: "http://192.168.0.49:8014/get_titles",
     queryKey: ["dreams"],
   });
@@ -28,16 +28,16 @@ export default function MainPage() {
           <Card className="p-4 md:p-6 bg-white shadow-xl">
             <CardHeader>
               <CardTitle className="text-2xl md:text-4xl font-bold mb-2 md:mb-4">
-                Dream Interpretation
+                Why do we dream?
               </CardTitle>
               <CardDescription className="text-base md:text-lg text-gray-600">
-                Explore the meaning behind your dreams with our comprehensive guide.
+              Dreaming is a normal brain function. Some theories propose that dreams assist in processing memories or satisfying psychological needs, while others consider them a consequence of brain activity. The precise cause of dreams remains unclear.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <img src={infoImg} alt="Dream Info" className="w-full h-auto rounded-lg shadow-md" />
               <div className="flex justify-center " >
-              <Button onClick={() => handleWhyDream()} variant={"green"} className="mt-10 p-6 w-[80vw] " >
+              <Button onClick={() => handleWhyDream()} variant={"green"} className="mt-8 p-6 w-[80vw] " >
               Why do we dream?
             </Button>
                 </div>

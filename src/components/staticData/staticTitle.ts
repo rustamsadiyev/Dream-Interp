@@ -10,13 +10,7 @@ export const staticDreamTitles: DreamTitle[] = [
   { title: "Losing", url: "/details/Lost" },
   { title: "Being Chased", url: "/details/Expulsion" },
   { title: "Good deed", url: "/details/Good%20deed" },
-];
-
-export const someStaticDreams: DreamTitle[] = [
-  { title: "Being Chased", url: "/details/Expulsion" },
-  { title: "Good deed", url: "/details/Good%20deed" },
   { title: "Examine", url: "/details/Examine" },
-  { title: "Animals", url: "/details/Sound%2520of%2520animals" },
 ];
 
 export const whyDream= {

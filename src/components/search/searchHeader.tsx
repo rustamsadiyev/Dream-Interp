@@ -2,10 +2,11 @@ import { useState, ChangeEvent } from "react";
 import { Button } from "../ui/button";
 import bgImage from "../../../public/assets/bg_image.avif";
 import { useGet } from "@/hooks/useGet";
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useLocation } from "@tanstack/react-router";
 
 export default function SearchHeader() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   // const [multiWordOptions, setMultiWordOptions] = useState<string[]>([]);
@@ -46,8 +47,6 @@ export default function SearchHeader() {
     });
   };
 
-  
-
   return (
     <div className="relative w-full">
       <div
@@ -69,14 +68,15 @@ export default function SearchHeader() {
                 placeholder="Search here..."
                 className="p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base"
               />
-              <Button
-                variant="outline"
-                className="shrink-0 px-2 sm:px-3 py-2 text-blue-500 hover:bg-blue-100 rounded-full transition-colors"
-              >
-                <a href="/">
-                🏠
-                </a>
-              </Button>
+              {location.pathname !== "/" && (
+                <Button
+                  variant="outline"
+                  className="shrink-0 px-2 sm:px-3 py-2 text-blue-500 hover:bg-blue-100 rounded-full transition-colors"
+                  onClick={() => navigate({ to: "/" })}
+                >
+                  🏠
+                </Button>
+              )}
             </div>
 
             {filteredOptions.length > 0 && (
