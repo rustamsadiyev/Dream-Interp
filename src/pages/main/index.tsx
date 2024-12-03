@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import infoImg from "../../../public/assets/reason.jpg";
 import { Button } from "@/components/ui/button";
-import { useGet } from "@/hooks/useGet";
+// import { useGet } from "@/hooks/useGet";
 import { useNavigate } from "@tanstack/react-router";
 import { whyDream } from "@/components/staticData/staticTitle";
 import MainDreams from "@/components/mainDreams";
@@ -14,10 +14,10 @@ export default function MainPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const {data} = useGet({
-    endpoint: "http://192.168.0.49:8014/get_titles",
-    queryKey: ["dreams"],
-  });
+  // const {data} = useGet({
+  //   endpoint: "http://192.168.0.49:8014/get_titles",
+  //   queryKey: ["dreams"],
+  // });
 
   // if (error) return <p>{error.message}</p>;
 

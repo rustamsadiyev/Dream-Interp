@@ -11,7 +11,7 @@ export default function SearchHeader() {
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
   // const [multiWordOptions, setMultiWordOptions] = useState<string[]>([]);
 
-  const { data, error } = useGet({
+  const { data,} = useGet({
     endpoint: "http://192.168.0.49:8014/get_titles",
     queryKey: ["dreams"],
   });
