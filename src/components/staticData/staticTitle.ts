@@ -4,13 +4,13 @@ interface DreamTitle {
 }
 
 export const staticDreamTitles: DreamTitle[] = [
-  { title: "Height", url: "/details/Height" },
   { title: "Flying", url: "/details/Flying" },
   { title: "Child", url: "/details/Child" },
-  { title: "Losing", url: "/details/Lost" },
+  { title: "Travels", url: "/details/Travels" },
+  { title: "Woman", url: "/details/Woman" },
   { title: "Being Chased", url: "/details/Expulsion" },
-  { title: "Good deed", url: "/details/Pearl%20necklace" },
-  { title: "Examine", url: "/details/Examine" },
+  { title: "Good deed", url: "/details/Good%2520deed" },
+  { title: "Death", url: "/details/Death" },
 ];
 
 export const whyDream= {
