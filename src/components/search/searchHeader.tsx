@@ -1,21 +1,62 @@
 import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import bgImage from "../../../public/assets/bg_image.avif";
-import { useGet } from "@/hooks/useGet";
+import axios from "axios";
 import { useNavigate, useLocation } from "@tanstack/react-router";
+
+const TITLES_STORAGE_KEY = 'dreamTitles';
+const TITLES_CACHE_TIME = 10 * 24 * 60 * 60 * 1000;
 
 export default function SearchHeader() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
+  const [titles, setTitles] = useState<string[]>([]);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data } = useGet({
-    endpoint: "https://dreams.loongair.uz/get_titles",
-    queryKey: ["dreams"],
-  });
-  
+  useEffect(() => {
+    const fetchTitles = async () => {
+      try {
+        const cachedData = localStorage.getItem(TITLES_STORAGE_KEY);
+        if (cachedData) {
+          const { titles, timestamp } = JSON.parse(cachedData);
+          if (Date.now() - timestamp < TITLES_CACHE_TIME) {
+            setTitles(titles);
+            return;
+          }
+        }
+
+        const response = await axios.get("https://dreams.loongair.uz/get_titles", {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          withCredentials: false
+        });
+
+        const newTitles = response.data;
+        setTitles(newTitles);
+
+        // Cache the new titles with timestamp
+        localStorage.setItem(TITLES_STORAGE_KEY, JSON.stringify({
+          titles: newTitles,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        console.error('Failed to fetch titles:', error);
+        // If fetch fails, try to use cached data even if expired
+        const cachedData = localStorage.getItem(TITLES_STORAGE_KEY);
+        if (cachedData) {
+          const { titles } = JSON.parse(cachedData);
+          setTitles(titles);
+        }
+      }
+    };
+
+    fetchTitles();
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
@@ -33,9 +74,9 @@ export default function SearchHeader() {
     const value = e.target.value;
     setSearchTerm(value);
   
-    if (data && Array.isArray(data)) {
+    if (titles.length > 0) {
       const filtered = value
-        ? data.filter(option =>
+        ? titles.filter(option =>
             [...value].every((char, index) =>
               option[index]?.toLowerCase() === char.toLowerCase()
             )

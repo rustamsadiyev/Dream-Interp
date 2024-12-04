@@ -12,21 +12,12 @@ const useDream = (dreamName: string) => {
   }) as { data: DreamResponse | undefined; error: Error | null; isLoading: boolean };
 };
 
-const useTitles = () => {
-  return useGet({
-    endpoint: "https://dreams.loongair.uz/get_titles",
-    queryKey: ["dreams"]
-  });
-};
-
 export default function DreamDetails() {
   const { id } = DetailsRoute.useParams();
   const dreamName = decodeURIComponent(id);
 
   const { data: dreamData, error: dreamError, isLoading } = useDream(dreamName);
-  const { data: titlesData } = useTitles();
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -35,16 +26,14 @@ export default function DreamDetails() {
     );
   }
 
-  // Error state
   if (dreamError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500">Error: {dreamError.message}</p>
+        <p className="text-red-500">{dreamError.message}</p>
       </div>
     );
   }
 
-  // Main content
   return (
     <div className="container mx-auto lg:w-[1250px] px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">{dreamName}</h1>
