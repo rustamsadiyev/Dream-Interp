@@ -5,23 +5,28 @@ interface DreamResponse {
   dream: string;
 }
 
+const useDream = (dreamName: string) => {
+  return useGet({
+    endpoint: `https://dreams.loongair.uz/get_dream/${encodeURIComponent(dreamName)}`,
+    queryKey: ['dream', dreamName],
+  }) as { data: DreamResponse | undefined; error: Error | null; isLoading: boolean };
+};
+
+const useTitles = () => {
+  return useGet({
+    endpoint: "https://dreams.loongair.uz/get_titles",
+    queryKey: ["dreams"]
+  });
+};
+
 export default function DreamDetails() {
   const { id } = DetailsRoute.useParams();
   const dreamName = decodeURIComponent(id);
 
-  const { data: dreamData, error: dreamError, isLoading } = useGet({
-    endpoint: `http://192.168.0.49:8014/get_dream?title=${encodeURIComponent(dreamName)}`,
-    queryKey: ['dream', dreamName],
-  }) as { data: DreamResponse | undefined; error: Error | null; isLoading: boolean };
+  const { data: dreamData, error: dreamError, isLoading } = useDream(dreamName);
+  const { data: titlesData } = useTitles();
 
-  const { data: titlesData} = useGet({
-    endpoint: "http://192.168.0.49:8014/get_titles",
-    queryKey: ["dreams"]
-  });
-  
-  // if (titlesError) return <p>{titlesError.message}</p>
-  
-
+  // Loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -30,6 +35,7 @@ export default function DreamDetails() {
     );
   }
 
+  // Error state
   if (dreamError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -38,6 +44,7 @@ export default function DreamDetails() {
     );
   }
 
+  // Main content
   return (
     <div className="container mx-auto lg:w-[1250px] px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">{dreamName}</h1>

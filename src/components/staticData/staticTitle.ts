@@ -9,7 +9,7 @@ export const staticDreamTitles: DreamTitle[] = [
   { title: "Child", url: "/details/Child" },
   { title: "Losing", url: "/details/Lost" },
   { title: "Being Chased", url: "/details/Expulsion" },
-  { title: "Good deed", url: "/details/Good%20deed" },
+  { title: "Good deed", url: "/details/Pearl%20necklace" },
   { title: "Examine", url: "/details/Examine" },
 ];
 

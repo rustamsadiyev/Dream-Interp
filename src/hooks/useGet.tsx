@@ -10,7 +10,13 @@ export const useGet = ({ endpoint, queryKey }: UseGetProps) => {
   const { data, error, isLoading } = useQuery({
     queryKey: queryKey,
     queryFn: async () => {
-      const response = await axios.get(endpoint)
+      const response = await axios.get(endpoint, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false
+      })
         .then(response => response.data);
       return response;
     },

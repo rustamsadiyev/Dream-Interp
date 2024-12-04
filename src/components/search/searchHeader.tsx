@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import bgImage from "../../../public/assets/bg_image.avif";
 import { useGet } from "@/hooks/useGet";
@@ -9,12 +9,25 @@ export default function SearchHeader() {
   const location = useLocation();
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>([]);
-  // const [multiWordOptions, setMultiWordOptions] = useState<string[]>([]);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data,} = useGet({
-    endpoint: "http://192.168.0.49:8014/get_titles",
+  const { data } = useGet({
+    endpoint: "https://dreams.loongair.uz/get_titles",
     queryKey: ["dreams"],
   });
+  
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setFilteredOptions([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -30,11 +43,6 @@ export default function SearchHeader() {
         : [];
   
       setFilteredOptions(filtered);
-  
-  //     const multiWord = data.filter(option => option.split(" ").length > 1);
-  //     setMultiWordOptions(multiWord);
-  // console.log(multiWord);
-  
     }
   };
 
@@ -45,6 +53,12 @@ export default function SearchHeader() {
       to: '/details/$id',
       params: { id: encodeURIComponent(option) },
     });
+  };
+
+  const handleHomeClick = () => {
+    setSearchTerm("");
+    setFilteredOptions([]);
+    navigate({ to: "/" });
   };
 
   return (
@@ -59,8 +73,8 @@ export default function SearchHeader() {
               Search for the dream
             </h1>
           </div>
-          <div className="bg-whitebg-opacity-70 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg mx-auto w-full max-w-[85%] sm:max-w-[75%] md:max-w-[65%] lg:max-w-[55%]">
-            <div className="relative flex items-center space-x-2 ">
+          <div ref={searchContainerRef} className="bg-whitebg-opacity-70 backdrop-blur-sm p-2 sm:p-3 rounded-lg shadow-lg mx-auto w-full max-w-[85%] sm:max-w-[75%] md:max-w-[65%] lg:max-w-[55%]">
+            <div className="relative flex items-center space-x-2">
               <input
                 type="text"
                 value={searchTerm}
@@ -72,7 +86,7 @@ export default function SearchHeader() {
                 <Button
                   variant="outline"
                   className="shrink-0 px-2 sm:px-3 py-2 text-blue-500 hover:bg-blue-100 rounded-full transition-colors"
-                  onClick={() => navigate({ to: "/" })}
+                  onClick={handleHomeClick}
                 >
                   🏠
                 </Button>
